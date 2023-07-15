@@ -2,23 +2,9 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController {
     
-    private struct QuizStepViewModel {
-      let image: UIImage
-      let question: String
-      let questionNumber: String
-    }
-
-    private struct QuizResultsViewModel {
-      let title: String
-      let text: String
-      let buttonText: String
-    }
-    
-    private  struct QuizQuestion {
-       let image: String
-       let text: String
-       let correctAnswer: Bool
-     }
+    @IBOutlet weak private var imageView: UIImageView!
+    @IBOutlet weak private var textLabel: UILabel!
+    @IBOutlet weak private var counterLabel: UILabel!
     
     private let questions: [QuizQuestion] = [
     QuizQuestion(
@@ -71,15 +57,41 @@ final class MovieQuizViewController: UIViewController {
         text: "Рейтинг этого фильма больше чем 6?:",
         correctAnswer: false)
      ]
-
-    @IBOutlet weak private var imageView: UIImageView!
-    @IBOutlet weak private var textLabel: UILabel!
-    @IBOutlet weak private var counterLabel: UILabel!
     
     private var currentQuestionIndex = 0
 
     private var correctAnswers = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        imageView.image = UIImage(named: "The Godfather")
+        
+        textLabel.text = "Рейтинг этого фильма больше чем 6"
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    private struct QuizStepViewModel {
+      let image: UIImage
+      let question: String
+      let questionNumber: String
+    }
 
+    private struct QuizResultsViewModel {
+      let title: String
+      let text: String
+      let buttonText: String
+    }
+    
+    private  struct QuizQuestion {
+       let image: String
+       let text: String
+       let correctAnswer: Bool
+     }
+    
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         
         let questionStep = QuizStepViewModel(
@@ -90,18 +102,11 @@ final class MovieQuizViewController: UIViewController {
         return questionStep
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        imageView.image = UIImage(named: "The Godfather")
-        
-        textLabel.text = "Рейтинг этого фильма больше чем 6"
-    }
-    
     private func show(quiz step: QuizStepViewModel) {
       imageView.image = step.image
       textLabel.text = step.question
       counterLabel.text = step.questionNumber
+      imageView.layer.borderWidth = 0
     }
 
     private func showNextQuestionOrResults() {
@@ -159,6 +164,8 @@ final class MovieQuizViewController: UIViewController {
         let givenAnswer = true
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        
+        
     }
     
     @IBAction private func noButtonClicked(_ sender: Any) {

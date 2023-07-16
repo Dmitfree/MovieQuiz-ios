@@ -186,5 +186,4 @@ final class MovieQuizViewController: UIViewController {
         
         setButtonsEnabled(isEnabled: false)
     }
-    
 }

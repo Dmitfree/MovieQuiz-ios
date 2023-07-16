@@ -2,9 +2,30 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController {
     
+    private struct QuizStepViewModel {
+      let image: UIImage
+      let question: String
+      let questionNumber: String
+    }
+
+    private struct QuizResultsViewModel {
+      let title: String
+      let text: String
+      let buttonText: String
+    }
+    
+    private  struct QuizQuestion {
+       let image: String
+       let text: String
+       let correctAnswer: Bool
+     }
+    
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var counterLabel: UILabel!
+    
+    @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var yesButton: UIButton!
     
     private let questions: [QuizQuestion] = [
     QuizQuestion(
@@ -74,23 +95,10 @@ final class MovieQuizViewController: UIViewController {
         return .lightContent
     }
     
-    private struct QuizStepViewModel {
-      let image: UIImage
-      let question: String
-      let questionNumber: String
-    }
-
-    private struct QuizResultsViewModel {
-      let title: String
-      let text: String
-      let buttonText: String
-    }
-    
-    private  struct QuizQuestion {
-       let image: String
-       let text: String
-       let correctAnswer: Bool
-     }
+    private func setButtonsEnabled(isEnabled: Bool) {
+            noButton.isEnabled = isEnabled
+            yesButton.isEnabled = isEnabled
+        }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         
@@ -107,6 +115,8 @@ final class MovieQuizViewController: UIViewController {
       textLabel.text = step.question
       counterLabel.text = step.questionNumber
       imageView.layer.borderWidth = 0
+        
+        setButtonsEnabled(isEnabled: true)
     }
 
     private func showNextQuestionOrResults() {
@@ -165,7 +175,7 @@ final class MovieQuizViewController: UIViewController {
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
-        
+        setButtonsEnabled(isEnabled: false)
     }
     
     @IBAction private func noButtonClicked(_ sender: Any) {
@@ -173,6 +183,8 @@ final class MovieQuizViewController: UIViewController {
         let givenAnswer = false
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        
+        setButtonsEnabled(isEnabled: false)
     }
     
 }

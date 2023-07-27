@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841B868E2A6EEDDD00C8A54C /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841B868D2A6EEDDD00C8A54C /* AlertPresenterProtocol.swift */; };
 		8442B4272A65B3AD002BFACE /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442B4262A65B3AD002BFACE /* QuestionFactory.swift */; };
 		8442B42A2A65B74A002BFACE /* QuizStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442B4292A65B74A002BFACE /* QuizStepViewModel.swift */; };
 		8442B42C2A65B766002BFACE /* QuizResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442B42B2A65B766002BFACE /* QuizResultsViewModel.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		841B868D2A6EEDDD00C8A54C /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
 		8442B4262A65B3AD002BFACE /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
 		8442B4292A65B74A002BFACE /* QuizStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStepViewModel.swift; sourceTree = "<group>"; };
 		8442B42B2A65B766002BFACE /* QuizResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultsViewModel.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				8442B4262A65B3AD002BFACE /* QuestionFactory.swift */,
 				84CF98962A670086004D8048 /* QuestionFactoryProtocol.swift */,
 				84CF98982A6725A4004D8048 /* QuestionFactoryDelegate.swift */,
+				841B868D2A6EEDDD00C8A54C /* AlertPresenterProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				84AE9B7C2A69B48800ED0C5E /* AlertPresenter.swift in Sources */,
 				84AE9B7A2A69AE7200ED0C5E /* AlertModel.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
+				841B868E2A6EEDDD00C8A54C /* AlertPresenterProtocol.swift in Sources */,
 				84CF98972A670086004D8048 /* QuestionFactoryProtocol.swift in Sources */,
 				84CF98992A6725A4004D8048 /* QuestionFactoryDelegate.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,

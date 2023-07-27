@@ -18,6 +18,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     
+    private var alertPresenter: AlertPresenterProtocol?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -32,6 +34,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         imageView.image = UIImage(named: "The Godfather")
         
         textLabel.text = "Рейтинг этого фильма больше чем 6"
+        
+        alertPresenter = AlertPresenter(delegate: self)
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -106,8 +111,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.showNextQuestionOrResults()
         }
     }
+
+    alertPresenter.show(alertModel: model)
     
-    private func show(quiz result: QuizResultsViewModel) {
+    /*  private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
             title: result.title,
             message: result.text,
@@ -125,7 +132,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             
             self.present(alert, animated: true, completion: nil)
         }
-        
+     */
+    
+   
     // MARK: - Actions
     
         @IBAction private func yesButtonClicked(_ sender: Any) {

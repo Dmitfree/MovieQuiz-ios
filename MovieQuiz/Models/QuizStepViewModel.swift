@@ -1,5 +1,3 @@
-//  Created by Dmitfre on 17.07.2023.
-
 import UIKit
 
 struct QuizStepViewModel {

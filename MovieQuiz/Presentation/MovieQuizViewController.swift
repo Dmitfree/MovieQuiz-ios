@@ -90,7 +90,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 title: "Этот раунд окончен!",
                 text: text,
                 buttonText: "Сыграть ещё раз")
-            show(quiz: viewModel)
+            let model = AlertModel
+            alertPresenter.show(alertModel: model)
+            //show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
             
@@ -111,8 +113,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.showNextQuestionOrResults()
         }
     }
-
-    alertPresenter.show(alertModel: model)
     
     /*  private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
@@ -132,8 +132,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             
             self.present(alert, animated: true, completion: nil)
         }
-     */
-    
+    */
    
     // MARK: - Actions
     

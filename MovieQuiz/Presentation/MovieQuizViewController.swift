@@ -31,7 +31,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         questionFactory?.requestNextQuestion()
         
-        imageView.image = UIImage(named: "The Godfather")
+        //imageView.image = UIImage(named: "The Godfather")
         
         textLabel.text = "Рейтинг этого фильма больше чем 6"
         
@@ -86,13 +86,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
             let text = "Ваш результат: \(correctAnswers)/10"
-            let viewModel = QuizResultsViewModel(
+            //let viewModel = QuizResultsViewModel(
+            let model = AlertModel(
                 title: "Этот раунд окончен!",
-                text: text,
-                buttonText: "Сыграть ещё раз")
-            let model = AlertModel
-            alertPresenter.show(alertModel: model)
+                //text: text,
+                message: text,
+                //buttonText: "Сыграть ещё раз")
+                buttonText: "Сыграть ещё раз",
+                completion: { [weak self] in
+                    self?.questionFactory?.requestNextQuestion()
+                }
+            )
             //show(quiz: viewModel)
+            alertPresenter?.showQuizResult(model: model)
         } else {
             currentQuestionIndex += 1
             

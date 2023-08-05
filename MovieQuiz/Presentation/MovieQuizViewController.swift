@@ -20,10 +20,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private var alertPresenter: AlertPresenterProtocol?
     
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(NSHomeDirectory())
         
           imageView.layer.cornerRadius = 20
         
@@ -37,6 +40,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         alertPresenter = AlertPresenter(delegate: self)
         
+        enum FileManagerError: Error {
+            case fileDoesntExist
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,6 +62,31 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self?.show(quiz: viewModel)
             }
         }
+    
+    // MARK: - AlertPresenterDelegate
+    
+    private func showNextQuestionOrResults() {
+        if currentQuestionIndex == questionsAmount - 1 {
+            let text = "Ваш результат: \(correctAnswers)/10"
+            //let viewModel = QuizResultsViewModel(
+            let model = AlertModel(
+                title: "Этот раунд окончен!",
+                //text: text,
+                message: text,
+                //buttonText: "Сыграть ещё раз")
+                buttonText: "Сыграть ещё раз",
+                completion: { [weak self] in
+                    self?.questionFactory?.requestNextQuestion()
+                }
+            )
+            //show(quiz: viewModel)
+            alertPresenter?.showQuizResult(model: model)
+        } else {
+            currentQuestionIndex += 1
+            
+            self.questionFactory?.requestNextQuestion()
+        }
+    }
     
     // MARK: - Private functions
     
@@ -83,28 +114,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         setButtonsEnabled(isEnabled: true)
     }
     
-    private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questionsAmount - 1 {
-            let text = "Ваш результат: \(correctAnswers)/10"
-            //let viewModel = QuizResultsViewModel(
-            let model = AlertModel(
-                title: "Этот раунд окончен!",
-                //text: text,
-                message: text,
-                //buttonText: "Сыграть ещё раз")
-                buttonText: "Сыграть ещё раз",
-                completion: { [weak self] in
-                    self?.questionFactory?.requestNextQuestion()
-                }
-            )
-            //show(quiz: viewModel)
-            alertPresenter?.showQuizResult(model: model)
-        } else {
-            currentQuestionIndex += 1
-            
-            self.questionFactory?.requestNextQuestion()
-        }
-    }
     
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
@@ -119,6 +128,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.showNextQuestionOrResults()
         }
     }
+    
+    // метод показа аалерта заменен на AlertPresenter
     
     /*  private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(

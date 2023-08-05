@@ -20,6 +20,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private var alertPresenter: AlertPresenterProtocol?
     
+    private var statisticService: StatisticService?
+    
     
     // MARK: - Lifecycle
     
@@ -32,6 +34,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         questionFactory = QuestionFactory(delegate: self)
         
+        statisticService = StatisticServiceImplementation()
+        
         questionFactory?.requestNextQuestion()
         
         //imageView.image = UIImage(named: "The Godfather")
@@ -40,9 +44,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         alertPresenter = AlertPresenter(delegate: self)
         
-        enum FileManagerError: Error {
-            case fileDoesntExist
-        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

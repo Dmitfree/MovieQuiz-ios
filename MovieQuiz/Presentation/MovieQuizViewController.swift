@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, AlertPresenterDelegate {
     
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
@@ -19,8 +19,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestion: QuizQuestion?
     
     private var alertPresenter: AlertPresenterProtocol?
-    
-    private var statisticService: StatisticService?
+    private var statisticService: StatisticService = StatisticServiceImplementation() /// экземпляр класса StatisticServiceImplementation
     
     
     // MARK: - Lifecycle
@@ -30,11 +29,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         print(NSHomeDirectory())
         
-          imageView.layer.cornerRadius = 20
+        imageView.layer.cornerRadius = 20
         
         questionFactory = QuestionFactory(delegate: self)
         
-        statisticService = StatisticServiceImplementation()
+        statisticService = StatisticServiceImplementation()  /// инициализируем сервис по статистике
         
         questionFactory?.requestNextQuestion()
         
@@ -60,33 +59,42 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         currentQuestion = question
         let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
-                self?.show(quiz: viewModel)
-            }
+            self?.show(quiz: viewModel)
         }
+    }
     
     // MARK: - AlertPresenterDelegate
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = "Ваш результат: \(correctAnswers)/10"
-            //let viewModel = QuizResultsViewModel(
+            let totalQuestions = currentQuestionIndex + 1
+            statisticService.store(correct: correctAnswers, total: totalQuestions)
+            let bestGame = statisticService.bestGame
+            let text = """
+                            Ваш результат: \(correctAnswers)/\(totalQuestions)
+                            Количество сыгранных квизов: \(statisticService.gamesCount)
+                            Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
+                            Средняя точность: \(String(format: "%.2f", statisticService.accuracy))%  
+                        """
             let model = AlertModel(
                 title: "Этот раунд окончен!",
-                //text: text,
                 message: text,
-                //buttonText: "Сыграть ещё раз")
                 buttonText: "Сыграть ещё раз",
-                completion: { [weak self] in
-                    self?.questionFactory?.requestNextQuestion()
-                }
-            )
-            //show(quiz: viewModel)
-            alertPresenter?.showQuizResult(model: model)
+                completion: startNewQuiz)
+            
+            alertPresenter?.alert(with: model)   /// передаем алерту текст из
         } else {
             currentQuestionIndex += 1
             
-            self.questionFactory?.requestNextQuestion()
+            questionFactory?.requestNextQuestion()
         }
+    }
+
+    func startNewQuiz(_: UIAlertAction) {
+        
+        self.currentQuestionIndex = 0
+        self.correctAnswers = 0
+        self.questionFactory?.requestNextQuestion()
     }
     
     // MARK: - Private functions
@@ -129,28 +137,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.showNextQuestionOrResults()
         }
     }
-    
-    // метод показа аалерта заменен на AlertPresenter
-    
-    /*  private func show(quiz result: QuizResultsViewModel) {
-        let alert = UIAlertController(
-            title: result.title,
-            message: result.text,
-            preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            self.currentQuestionIndex = 0
-            self.correctAnswers = 0
-            
-            questionFactory?.requestNextQuestion()
-        }
-            
-            alert.addAction(action)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    */
    
     // MARK: - Actions
     
@@ -176,3 +162,5 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             setButtonsEnabled(isEnabled: false)
         }
     }
+
+

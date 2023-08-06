@@ -1,5 +1,6 @@
 import Foundation
 
 protocol AlertPresenterProtocol {
-    func showQuizResult(model: AlertModel)
+    var delegate: AlertPresenterDelegate? { get }
+    func alert(with model: AlertModel)
 }

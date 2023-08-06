@@ -1,22 +1,24 @@
 import UIKit
 
+// MARK: - AlertPresenter Class
+
 class AlertPresenter: AlertPresenterProtocol {
     
-    weak var delegate: UIViewController?
+    weak var delegate: AlertPresenterDelegate?
     
-    init (delegate: UIViewController){
+    init (delegate: AlertPresenterDelegate?){
         self.delegate = delegate
     }
     
-    func showQuizResult(model: AlertModel) {
+    func alert(with model: AlertModel) {  /// метод показа алерта
         let alert = UIAlertController(
             title: model.title,
             message: model.message,
             preferredStyle: .alert)
         let action = UIAlertAction(
             title: model.buttonText,
-            style: .default) { _ in
-                model.completion()}
+            style: .default,
+            handler: model.completion)   /// Completion handler – это функция, которая в качестве параметра принимает другую функцию.
         
         alert.addAction(action)
         

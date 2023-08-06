@@ -2,7 +2,7 @@ import UIKit
 
 // MARK: - AlertPresenter Class
 
-class AlertPresenter: AlertPresenterProtocol {
+final class AlertPresenter: AlertPresenterProtocol {
     
     weak var delegate: AlertPresenterDelegate?
     

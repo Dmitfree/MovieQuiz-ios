@@ -27,8 +27,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(NSHomeDirectory())
-        
         imageView.layer.cornerRadius = 20
         
         questionFactory = QuestionFactory(delegate: self)
@@ -36,8 +34,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         statisticService = StatisticServiceImplementation()  /// инициализируем сервис по статистике
         
         questionFactory?.requestNextQuestion()
-        
-        //imageView.image = UIImage(named: "The Godfather")
         
         textLabel.text = "Рейтинг этого фильма больше чем 6"
         
@@ -77,10 +73,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                             Средняя точность: \(String(format: "%.2f", statisticService.accuracy))%  
                         """
             let model = AlertModel(
-                title: "Этот раунд окончен!",
-                message: text,
-                buttonText: "Сыграть ещё раз",
-                completion: startNewQuiz)
+                            title: "Этот раунд окончен!",
+                            message: text,
+                            buttonText: "Сыграть ещё раз"
+                        ) { [weak self] _ in
+                            self?.startNewQuiz()
+                        }
             
             alertPresenter?.alert(with: model)   /// передаем алерту текст из
         } else {
@@ -90,11 +88,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
     }
 
-    func startNewQuiz(_: UIAlertAction) {
+    func startNewQuiz() {
         
-        self.currentQuestionIndex = 0
-        self.correctAnswers = 0
-        self.questionFactory?.requestNextQuestion()
+        currentQuestionIndex = 0
+        correctAnswers = 0
+        questionFactory?.requestNextQuestion()
     }
     
     // MARK: - Private functions

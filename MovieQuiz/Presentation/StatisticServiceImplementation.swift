@@ -81,7 +81,7 @@ final class StatisticServiceImplementation: StatisticService {
     
     func store(correct count: Int, total amount: Int) {
         
-        self.gamesCount += 1
+        gamesCount += 1
         
         let currentGame = GameRecord(correct: count, total: amount, date: Date())
         

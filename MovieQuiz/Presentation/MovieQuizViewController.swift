@@ -9,7 +9,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var yesButton: UIButton!
     
-    
     private var currentQuestionIndex = 0
     
     private var correctAnswers = 0

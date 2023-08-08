@@ -9,6 +9,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var yesButton: UIButton!
     
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     private var currentQuestionIndex = 0
     
     private var correctAnswers = 0
@@ -134,7 +136,35 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             self.showNextQuestionOrResults()
         }
     }
+    
+    //MARK: - URLSession
+    
+    private func showLoadingIndicator() {
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+    }
    
+    
+    private func showNetworkError(message: String) {
+       // hideLoadingIndicator()
+        
+        showLoadingIndicator()
+        
+        let model = AlertModel(
+            title: "Ошибка",
+            message: message,
+            buttonText: "Попробовать еще раз")
+        { [weak self] _ in
+            self?.startNewQuiz()
+            
+            self?.currentQuestionIndex = 0
+            self?.correctAnswers = 0
+                    
+            self?.questionFactory?.requestNextQuestion()
+        }
+        alertPresenter?.alert(with: model)
+    }
+    
     // MARK: - Actions
     
         @IBAction private func yesButtonClicked(_ sender: Any) {

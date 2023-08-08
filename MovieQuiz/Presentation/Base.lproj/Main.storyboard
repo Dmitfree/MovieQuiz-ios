@@ -110,19 +110,25 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Q3p-Ey-IYs" userLabel="Loading Indicator">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
+                            <constraint firstItem="Q3p-Ey-IYs" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9GM-K8-vU4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="q1m-3G-JdO" secondAttribute="bottom" id="F9S-db-3D8"/>
                             <constraint firstItem="q1m-3G-JdO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="bfs-GY-b47"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q1m-3G-JdO" secondAttribute="trailing" constant="20" id="gRE-ms-eA8"/>
+                            <constraint firstItem="Q3p-Ey-IYs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kv4-h2-ilA"/>
                             <constraint firstItem="q1m-3G-JdO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="up0-z4-d3p"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="counterLabel" destination="yna-nF-ysk" id="nMU-sz-ILf"/>
                         <outlet property="imageView" destination="EOu-kv-y84" id="get-hS-2BS"/>
+                        <outlet property="loadingIndicator" destination="Q3p-Ey-IYs" id="F2m-eM-eOQ"/>
                         <outlet property="noButton" destination="egy-Od-51E" id="gs4-oi-gML"/>
                         <outlet property="textLabel" destination="bm1-Yc-SmA" id="vEH-Xy-QNx"/>
                         <outlet property="yesButton" destination="9Cx-IV-eWw" id="hoT-Bj-WR5"/>

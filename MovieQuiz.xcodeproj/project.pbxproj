@@ -82,6 +82,7 @@
 				84AFC9AA2A7FABEA0084F6B7 /* AlertPresenterProtocol.swift */,
 				84AFC9A82A7FAB9B0084F6B7 /* AlertPresenterDelegate.swift */,
 				84AFC9A42A7FAAF40084F6B7 /* StatisticServiceProtocol.swift */,
+				84AFC9A62A7FAB2F0084F6B7 /* StatisticServiceImplementation.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -112,7 +113,6 @@
 			children = (
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
 				84AE9B7B2A69B48800ED0C5E /* AlertPresenter.swift */,
-				84AFC9A62A7FAB2F0084F6B7 /* StatisticServiceImplementation.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
 			);
 			path = Presentation;

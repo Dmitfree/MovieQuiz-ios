@@ -121,7 +121,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setButtonsEnabled(isEnabled: true)
     }
     
-    
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -144,6 +143,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     func didFailToLoadData(with error: Error) {
         showNetworkError(message: error.localizedDescription)
     }
+    
     //MARK: - URLSession
     
     private func showLoadingIndicator() {
@@ -151,7 +151,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         loadingIndicator.startAnimating()
     }
    
-    
     private func showNetworkError(message: String) {
         
         showLoadingIndicator()
@@ -195,5 +194,3 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             setButtonsEnabled(isEnabled: false)
         }
   }
-
-

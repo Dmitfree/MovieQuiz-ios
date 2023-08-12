@@ -1,6 +1,6 @@
 import Foundation
 
-class QuestionFactory: QuestionFactoryProtocol {
+final class QuestionFactory: QuestionFactoryProtocol {
     
     private let moviesLoader: MoviesLoading
     
@@ -44,7 +44,7 @@ class QuestionFactory: QuestionFactoryProtocol {
                 
                 let rating = Float(movie.rating) ?? 0
                 
-                let text = "Рейтинг этого фильма больше чем 6?"
+                let text = "Рейтинг этого фильма больше чем 7?"
                 let correctAnswer = rating > 6
                 
                 let question = QuizQuestion(image: imageData,

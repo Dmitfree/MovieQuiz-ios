@@ -19,7 +19,6 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
     
-    
     var totalQuestions: Int {
         get {
             guard let total = userDefaults.object(forKey: Keys.totalQuestions.rawValue) as? Int else {
@@ -72,12 +71,11 @@ final class StatisticServiceImplementation: StatisticService {
                 print("Возникла ошибка с JSON-кодированием рекорда игры")
                 return
             }
-            
             userDefaults.set(data, forKey: Keys.bestGame.rawValue)
         }
     }
     
-// MARK: Функция сохранения лучшего результата с проверкой на то, что новый результат лучше сохранённого в User Defaults
+    // MARK: - Функция сохранения лучшего результата с проверкой на то, что новый результат лучше сохранённого в User Defaults
     
     func store(correct count: Int, total amount: Int) {
         

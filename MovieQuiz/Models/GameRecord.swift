@@ -11,4 +11,3 @@ extension GameRecord: Comparable {
         lhs.correct < rhs.correct
     }
 }
- 

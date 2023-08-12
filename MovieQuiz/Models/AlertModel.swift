@@ -8,4 +8,3 @@ struct AlertModel {
     
   let completion: (UIAlertAction) -> Void
 }
-

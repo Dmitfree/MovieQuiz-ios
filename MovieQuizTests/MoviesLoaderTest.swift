@@ -1,9 +1,4 @@
-//
-//  MoviesLoaderTest.swift
-//  MovieQuizTests
-//
 //  Created by Dmitfre on 14.08.2023.
-//
 
 import XCTest
 

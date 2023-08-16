@@ -12,15 +12,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     private var currentQuestionIndex = 0
+    private let questionsAmount: Int = 10
     
     private var correctAnswers = 0
     
-    private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     
     private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService = StatisticServiceImplementation() /// экземпляр класса StatisticServiceImplementation
+    
+    private let presenter = MovieQuizPresenter()
     
     // MARK: - Lifecycle
     
@@ -53,7 +55,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
         
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
@@ -102,7 +104,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         yesButton.isEnabled = isEnabled
     }
     
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+    /*private func convert(model: QuizQuestion) -> QuizStepViewModel {
         
         let questionStep = QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
@@ -111,6 +113,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         
         return questionStep
     }
+   */
     
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image

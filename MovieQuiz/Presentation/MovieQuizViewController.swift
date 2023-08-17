@@ -11,8 +11,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    private var currentQuestionIndex = 0
-    private let questionsAmount: Int = 10
+   // private var currentQuestionIndex = 0
+   // private let questionsAmount: Int = 10
     
     private var correctAnswers = 0
     
@@ -64,10 +64,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // MARK: - AlertPresenterDelegate
     
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questionsAmount - 1 {
-            let totalQuestions = currentQuestionIndex + 1
+        
+        if  presenter.isLastQuestion() { // presenter.currentQuestionIndex == presenter.questionsAmount - 1 { //currentQuestionIndex == questionsAmount - 1 {
+            
+            let totalQuestions = presenter.currentQuestionIndex + 1 //let totalQuestions = currentQuestionIndex + 1 - ???
+            
             statisticService.store(correct: correctAnswers, total: totalQuestions)
+            
             let bestGame = statisticService.bestGame
+            
             let text = """
                             Ваш результат: \(correctAnswers)/\(totalQuestions)
                             Количество сыгранных квизов: \(statisticService.gamesCount)
@@ -84,7 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             
             alertPresenter?.alert(with: model)   /// передаем алерту текст из модели
         } else {
-            currentQuestionIndex += 1
+            presenter.switchToNextQuestion() // presenter.currentQuestionIndex += 1 // currentQuestionIndex += 1
             
             questionFactory?.requestNextQuestion()
         }
@@ -92,7 +97,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
 
     func startNewQuiz() {
         
-        currentQuestionIndex = 0
+        presenter.currentQuestionIndex = 0  // currentQuestionIndex = 0
         correctAnswers = 0
         questionFactory?.requestNextQuestion()
     }
@@ -165,7 +170,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         { [weak self] _ in
             self?.startNewQuiz()
             
-            self?.currentQuestionIndex = 0
+            self?.presenter.resetQuestionIndex()   //self?.currentQuestionIndex = 0
             self?.correctAnswers = 0
                     
             self?.questionFactory?.requestNextQuestion()

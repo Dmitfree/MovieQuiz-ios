@@ -17,7 +17,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var correctAnswers = 0
     
     private var questionFactory: QuestionFactoryProtocol?
-    private var currentQuestion: QuizQuestion?
+   // private var currentQuestion: QuizQuestion?
     
     private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService = StatisticServiceImplementation() /// экземпляр класса StatisticServiceImplementation
@@ -28,6 +28,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter.viewController = self
         
         imageView.layer.cornerRadius = 20
         
@@ -54,7 +56,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             return
         }
         
-        currentQuestion = question
+        presenter.currentQuestion = question
         let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
@@ -129,7 +131,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setButtonsEnabled(isEnabled: true)
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
@@ -181,24 +183,33 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // MARK: - Actions
     
         @IBAction private func yesButtonClicked(_ sender: Any) {
-            guard let currentQuestion = currentQuestion else {
+           /*  guard let currentQuestion = currentQuestion else {
+                
                 return
             }
             let givenAnswer = true
             
             showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
             
+            setButtonsEnabled(isEnabled: false) */
+            
+            presenter.currentQuestion = presenter.currentQuestion
+            presenter.yesButtonClicked()
             setButtonsEnabled(isEnabled: false)
         }
         
         @IBAction private func noButtonClicked(_ sender: Any) {
-            guard let currentQuestion = currentQuestion else {
+           /* guard let currentQuestion = currentQuestion else {
                 return
             }
             let givenAnswer = false
             
             showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
             
+            setButtonsEnabled(isEnabled: false) */
+            
+            presenter.currentQuestion = presenter.currentQuestion
+            presenter.noButtonClicked()
             setButtonsEnabled(isEnabled: false)
         }
   }

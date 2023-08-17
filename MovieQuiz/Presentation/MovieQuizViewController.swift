@@ -193,7 +193,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             
             setButtonsEnabled(isEnabled: false) */
             
-            presenter.currentQuestion = presenter.currentQuestion
+            //presenter.currentQuestion = presenter.currentQuestion
             presenter.yesButtonClicked()
             setButtonsEnabled(isEnabled: false)
         }
@@ -208,7 +208,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             
             setButtonsEnabled(isEnabled: false) */
             
-            presenter.currentQuestion = presenter.currentQuestion
+           // presenter.currentQuestion = presenter.currentQuestion
             presenter.noButtonClicked()
             setButtonsEnabled(isEnabled: false)
         }

@@ -9,8 +9,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     @IBOutlet weak private var yesButton: UIButton!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    private var alertPresenter: AlertPresenterProtocol?  /// также объявлена в презентере
-    
     private var presenter: MovieQuizPresenter!
     
     // MARK: - Lifecycle

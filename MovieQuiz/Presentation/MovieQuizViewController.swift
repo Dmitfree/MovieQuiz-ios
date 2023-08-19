@@ -13,8 +13,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     
     private var alertPresenter: AlertPresenterProtocol?  /// также объявлена в презентере
     
-    private var statisticService: StatisticService = StatisticServiceImplementation()  /// также объявлена в презентере
-    
+   // private var statisticService: StatisticService = StatisticServiceImplementation()  /// также объявлена в презентере
     
     private var presenter: MovieQuizPresenter!
     
@@ -29,7 +28,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         
         showLoadingIndicator()
         
-        statisticService = StatisticServiceImplementation()  /// инициализируем сервис по статистике
+       // statisticService = StatisticServiceImplementation()  /// инициализируем сервис по статистике
         
         presenter.alertPresenter = AlertPresenter(delegate: self)
     }
@@ -42,7 +41,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
 
     func startNewQuiz() {
         
-        presenter.currentQuestionIndex = 0  // currentQuestionIndex = 0
+        presenter.currentQuestionIndex = 0  
         presenter.correctAnswers = 0
         presenter.questionFactory?.requestNextQuestion()
     }

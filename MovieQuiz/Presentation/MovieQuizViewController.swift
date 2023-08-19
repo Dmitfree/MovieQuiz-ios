@@ -10,6 +10,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     private var presenter: MovieQuizPresenter!
+    var alertPresenter: AlertPresenterProtocol?
     
     // MARK: - Lifecycle
     
@@ -19,8 +20,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         presenter = MovieQuizPresenter(viewController: self)
         imageView.layer.cornerRadius = 20
         showLoadingIndicator()
-        presenter.alertPresenter = AlertPresenter(delegate: self)
-        
+        alertPresenter = AlertPresenter(delegate: self)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -29,9 +29,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     // MARK: - AlertPresenterDelegate
 
     func startNewQuiz() {
-        presenter.currentQuestionIndex = 0  
-        presenter.correctAnswers = 0
-        presenter.questionFactory?.requestNextQuestion()
+        presenter.restartGame()
     }
     
     // MARK: - Private functions
@@ -71,12 +69,9 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
             message: message,
             buttonText: "Попробовать еще раз")
         { [weak self] _ in
-            self?.presenter.startNewQuiz()
-            self?.presenter.resetQuestionIndex()
-            self?.presenter.correctAnswers = 0
-            self?.presenter.questionFactory?.requestNextQuestion()
+            self?.presenter.restartGame()
         }
-        presenter.alertPresenter?.alert(with: model)
+        alertPresenter?.alert(with: model)
     }
     
     // MARK: - Actions

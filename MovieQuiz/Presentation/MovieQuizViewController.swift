@@ -14,13 +14,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
    // private var currentQuestionIndex = 0
    // private let questionsAmount: Int = 10
     
-    private var correctAnswers = 0
+   // private var correctAnswers = 0  /// также объявлена в презентере
     
-    private var questionFactory: QuestionFactoryProtocol?
+   // private var questionFactory: QuestionFactoryProtocol?   /// также объявлена в презентере
    // private var currentQuestion: QuizQuestion?
     
-    private var alertPresenter: AlertPresenterProtocol?
-    private var statisticService: StatisticService = StatisticServiceImplementation() /// экземпляр класса StatisticServiceImplementation
+   // private var alertPresenter: AlertPresenterProtocol?  /// также объявлена в презентере
+    
+    private var statisticService: StatisticService = StatisticServiceImplementation()  /// также объявлена в презентере
+    
     
     private let presenter = MovieQuizPresenter()
     
@@ -33,16 +35,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         
         imageView.layer.cornerRadius = 20
         
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        presenter.questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         
-        questionFactory?.requestNextQuestion()
+        presenter.questionFactory?.requestNextQuestion()
         
         showLoadingIndicator()
-        questionFactory?.loadData()
+        presenter.questionFactory?.loadData()
         
         statisticService = StatisticServiceImplementation()  /// инициализируем сервис по статистике
         
-        alertPresenter = AlertPresenter(delegate: self)
+        presenter.alertPresenter = AlertPresenter(delegate: self)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -68,7 +70,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         
     // MARK: - AlertPresenterDelegate
     
-    private func showNextQuestionOrResults() {
+   /* private func showNextQuestionOrResults() {
         
         if  presenter.isLastQuestion() { // presenter.currentQuestionIndex == presenter.questionsAmount - 1 { //currentQuestionIndex == questionsAmount - 1 {
             
@@ -99,13 +101,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             questionFactory?.requestNextQuestion()
         }
     }
+    */
 
     func startNewQuiz() {
         
         presenter.currentQuestionIndex = 0  // currentQuestionIndex = 0
-        correctAnswers = 0
-        questionFactory?.requestNextQuestion()
+        presenter.correctAnswers = 0
+        presenter.questionFactory?.requestNextQuestion()
     }
+  
     
     // MARK: - Private functions
     
@@ -136,7 +140,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
-            correctAnswers += 1
+            presenter.correctAnswers += 1
         }
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
@@ -144,13 +148,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.showNextQuestionOrResults()
+            //self.presenter.correctAnswers = self.correctAnswers
+            //self.presenter.questionFactory = self.questionFactory
+            self.presenter.showNextQuestionOrResults()
         }
     }
     
     func didLoadDataFromServer() {
         loadingIndicator.isHidden = true
-        questionFactory?.requestNextQuestion()
+        presenter.questionFactory?.requestNextQuestion()
     }
 
     func didFailToLoadData(with error: Error) {
@@ -173,14 +179,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             message: message,
             buttonText: "Попробовать еще раз")
         { [weak self] _ in
-            self?.startNewQuiz()
+            self?.presenter.startNewQuiz()
             
             self?.presenter.resetQuestionIndex()   //self?.currentQuestionIndex = 0
-            self?.correctAnswers = 0
+            self?.presenter.correctAnswers = 0
                     
-            self?.questionFactory?.requestNextQuestion()
+            self?.presenter.questionFactory?.requestNextQuestion()
         }
-        alertPresenter?.alert(with: model)
+        presenter.alertPresenter?.alert(with: model)
     }
     
     // MARK: - Actions

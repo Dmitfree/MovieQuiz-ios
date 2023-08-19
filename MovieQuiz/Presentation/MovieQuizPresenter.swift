@@ -2,21 +2,32 @@
 
 import UIKit
 
-final class MovieQuizPresenter {
+final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     let questionsAmount: Int = 10
+    
     var currentQuestionIndex: Int = 0
     
     var currentQuestion: QuizQuestion?
-    weak var viewController: MovieQuizViewController?
     
-    //var noButton: UIButton!
-    //var yesButton: UIButton!
+    var correctAnswers = 0
     
-    var correctAnswers = 0   /// также объявлена в контроллере
-    var questionFactory: QuestionFactoryProtocol?  /// также объявлена в контроллере
     var alertPresenter: AlertPresenterProtocol?   /// также объявлена в контроллере
+    ///
     var statisticService: StatisticService = StatisticServiceImplementation()  /// также объявлена в контроллере
+    
+    // MARK: - QuestionFactoryDelegate
+    
+    var questionFactory: QuestionFactoryProtocol? 
+    private weak var viewController: MovieQuizViewController?
+    
+    init (viewController: MovieQuizViewController) {
+        self.viewController = viewController
+        
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        questionFactory?.loadData()
+        viewController.showLoadingIndicator()
+    }
     
     func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
@@ -40,24 +51,19 @@ final class MovieQuizPresenter {
         return questionStep
     }
     
-    /* func setButtonsEnabled(isEnabled: Bool) {
-        noButton?.isEnabled = isEnabled
-        yesButton?.isEnabled = isEnabled
-    } */
-    
     func yesButtonClicked() {
-        didAnswer(isYes: true)
+        didAnswer(isCorrectAnswer: true)
     }
     
     func noButtonClicked() {
-        didAnswer(isYes: false)
+        didAnswer(isCorrectAnswer: false)
     }
     
-    private func didAnswer(isYes: Bool) {
+    func didAnswer(isCorrectAnswer: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
         }
-        let givenAnswer = isYes
+        let givenAnswer = isCorrectAnswer
         
         viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
@@ -76,9 +82,9 @@ final class MovieQuizPresenter {
     
     func showNextQuestionOrResults() {
         
-        if  self.isLastQuestion() { // presenter.currentQuestionIndex == presenter.questionsAmount - 1 { //currentQuestionIndex == questionsAmount - 1 {
+        if  self.isLastQuestion() {
             
-            let totalQuestions = currentQuestionIndex + 1 //let totalQuestions = currentQuestionIndex + 1 - ???
+            let totalQuestions = currentQuestionIndex + 1
             
             statisticService.store(correct: correctAnswers, total: totalQuestions)
             
@@ -100,7 +106,7 @@ final class MovieQuizPresenter {
             alertPresenter?.alert(with: model)   /// передаем алерту текст из модели
             
         } else {
-            self.switchToNextQuestion() // presenter.currentQuestionIndex += 1 // currentQuestionIndex += 1
+            self.switchToNextQuestion()
             
             questionFactory?.requestNextQuestion()
         }
@@ -108,8 +114,17 @@ final class MovieQuizPresenter {
     
     func startNewQuiz() {
         
-        currentQuestionIndex = 0  // currentQuestionIndex = 0
+        currentQuestionIndex = 0  
         correctAnswers = 0
         questionFactory?.requestNextQuestion()
+    }
+    
+    func didLoadDataFromServer() {
+        viewController?.loadingIndicator.isHidden = true
+        questionFactory?.requestNextQuestion()
+    }
+
+        func didFailToLoadData(with error: Error) {
+            viewController?.showNetworkError(message: error.localizedDescription)
     }
 }

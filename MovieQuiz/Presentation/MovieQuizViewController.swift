@@ -52,7 +52,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // MARK: - QuestionFactoryDelegate
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else {
+        presenter.didReceiveNextQuestion(question: question)
+    }
+        /* guard let question = question else {
             return
         }
         
@@ -62,7 +64,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             self?.show(quiz: viewModel)
         }
     }
-    
+    */
+        
     // MARK: - AlertPresenterDelegate
     
     private func showNextQuestionOrResults() {
@@ -122,7 +125,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
    */
     
-    private func show(quiz step: QuizStepViewModel) {
+    func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber

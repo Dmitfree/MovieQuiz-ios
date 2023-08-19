@@ -89,10 +89,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             return
         }
         let givenAnswer = isCorrectAnswer
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        proceedWithAnswer(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+    private func proceedWithAnswer(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
@@ -100,11 +100,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.showNextQuestionOrResults()
+            self.proceedToNextQuestionOrResults()
         }
     }
     
-   private func showNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         if  self.isLastQuestion() {
             
             let totalQuestions = currentQuestionIndex + 1

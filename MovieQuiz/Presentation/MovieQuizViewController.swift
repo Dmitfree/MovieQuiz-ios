@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
+final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, MovieQuizViewControllerProtocol {
     
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
@@ -48,6 +48,10 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         setButtonsEnabled(isEnabled: true)
     }
     
+ /*   func show(quiz result: QuizResultsViewModel) {
+    }
+   */
+    
     func highlightImageBorder(isCorrectAnswer: Bool) {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
@@ -60,6 +64,10 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
     }
+    
+    func hideLoadingIndicator() {
+        loadingIndicator.isHidden = true
+        }
    
     func showNetworkError(message: String) {
         showLoadingIndicator()

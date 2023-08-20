@@ -6,9 +6,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private let statisticService: StatisticService!
     private weak var viewController: MovieQuizViewController?
-    
     private var questionFactory: QuestionFactoryProtocol?
-    
     private var currentQuestion: QuizQuestion?
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
@@ -77,13 +75,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         didAnswer(isCorrectAnswer: false)
     }
     
-    /*  func didAnswer(isCorrectAnswer: Bool) {
-              if isCorrectAnswer {
-                  correctAnswers += 1
-              }
-          }
-     */
-    
     private func didAnswer(isCorrectAnswer: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
@@ -106,7 +97,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private func proceedToNextQuestionOrResults() {
         if  self.isLastQuestion() {
-            
             let totalQuestions = currentQuestionIndex + 1
             
             statisticService.store(correct: correctAnswers, total: totalQuestions)
@@ -123,7 +113,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                             message: text,
                             buttonText: "Сыграть ещё раз"
                         ) { [weak self] _ in
-                            self?.restartGame() //self?.startNewQuiz()
+                            self?.restartGame()
         }
             viewController?.alertPresenter?.alert(with: model)   /// передаем алерту текст из модели
         } else {

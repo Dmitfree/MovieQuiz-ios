@@ -2,7 +2,7 @@
 
 import UIKit
 
-final class MovieQuizPresenter: QuestionFactoryDelegate {
+final class MovieQuizPresenter: QuestionFactoryDelegate {    
     
     private let statisticService: StatisticService!
     private weak var viewController: MovieQuizViewController?
@@ -11,6 +11,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswers = 0
+    
+    private lazy var alertPsenenter = AlertPresenter(delegate: viewController)
     
     init (viewController: MovieQuizViewController) {
         self.viewController = viewController

@@ -1,7 +1,7 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, MovieQuizViewControllerProtocol {
-    
+   
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var counterLabel: UILabel!
@@ -19,7 +19,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
         
         presenter = MovieQuizPresenter(viewController: self)
         imageView.layer.cornerRadius = 20
-        showLoadingIndicator()
         alertPresenter = AlertPresenter(delegate: self)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -67,7 +66,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
     
     func hideLoadingIndicator() {
         loadingIndicator.isHidden = true
-        }
+    }
    
     func showNetworkError(message: String) {
         showLoadingIndicator()

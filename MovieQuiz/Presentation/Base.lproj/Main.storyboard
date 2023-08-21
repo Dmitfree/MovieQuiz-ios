@@ -51,7 +51,9 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EOu-kv-y84" userLabel="Preview Image">
                                         <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
                                         <color key="backgroundColor" name="YP White"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="Poster"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Poster">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="EOu-kv-y84" secondAttribute="height" multiplier="2:3" id="l9h-Wy-35V"/>
                                         </constraints>

@@ -2,7 +2,7 @@
 
 import UIKit
 
-final class MovieQuizPresenter: QuestionFactoryDelegate {    
+final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private let statisticService: StatisticService!
     private weak var viewController: MovieQuizViewController?
@@ -12,7 +12,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private var currentQuestionIndex: Int = 0
     private var correctAnswers = 0
     
-    private lazy var alertPsenenter = AlertPresenter(delegate: viewController)
+    
+    
+    //private lazy var alertPsenenter = AlertPresenter(delegate: viewController as? any AlertPresenterDelegate)
     
     init (viewController: MovieQuizViewController) {
         self.viewController = viewController
@@ -28,9 +30,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.loadingIndicator.isHidden = true
         questionFactory?.requestNextQuestion()
     }
-
-        func didFailToLoadData(with error: Error) {
-            viewController?.showNetworkError(message: error.localizedDescription)
+    
+    func didFailToLoadData(with error: Error) {
+        viewController?.showNetworkError(message: error.localizedDescription)
     }
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -49,13 +51,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex == questionsAmount - 1
     }
     
-   func restartGame() {
+    func restartGame() {
         currentQuestionIndex = 0
         currentQuestionIndex = 0
         correctAnswers = 0
         questionFactory?.requestNextQuestion()
-       }
-   
+    }
+    
     func switchToNextQuestion() {
         currentQuestionIndex += 1
     }
@@ -111,12 +113,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                             Средняя точность: \(String(format: "%.2f", statisticService.accuracy))%
                         """
             let model = AlertModel(
-                            title: "Этот раунд окончен!",
-                            message: text,
-                            buttonText: "Сыграть ещё раз"
-                        ) { [weak self] _ in
-                            self?.restartGame()
-        }
+                title: "Этот раунд окончен!",
+                message: text,
+                buttonText: "Сыграть ещё раз"
+            ) { [weak self] _ in
+                self?.restartGame()
+            }
             viewController?.alertPresenter?.alert(with: model)   /// передаем алерту текст из модели
         } else {
             self.switchToNextQuestion()

@@ -1,7 +1,7 @@
 import Foundation
 
 final class StatisticServiceImplementation: StatisticService {
-
+    
     private let userDefaults = UserDefaults.standard
     private enum Keys: String{
         case correctQuestions, totalQuestions, accuracy, bestGame, gamesCount
@@ -47,7 +47,7 @@ final class StatisticServiceImplementation: StatisticService {
     var gamesCount: Int {
         get {
             guard let count = userDefaults.object(forKey: Keys.gamesCount.rawValue) as? Int else {
-               return 0
+                return 0
             }
             return count
         }

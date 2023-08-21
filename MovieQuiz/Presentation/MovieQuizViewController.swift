@@ -1,7 +1,7 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, MovieQuizViewControllerProtocol {
-   
+    
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var counterLabel: UILabel!
@@ -26,7 +26,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
     }
     
     // MARK: - AlertPresenterDelegate
-
+    
     func startNewQuiz() {
         presenter.restartGame()
     }
@@ -47,9 +47,9 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
         setButtonsEnabled(isEnabled: true)
     }
     
- /*   func show(quiz result: QuizResultsViewModel) {
-    }
-   */
+    /*   func show(quiz result: QuizResultsViewModel) {
+     }
+     */
     
     func highlightImageBorder(isCorrectAnswer: Bool) {
         imageView.layer.masksToBounds = true
@@ -67,7 +67,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
     func hideLoadingIndicator() {
         loadingIndicator.isHidden = true
     }
-   
+    
     func showNetworkError(message: String) {
         showLoadingIndicator()
         
@@ -83,13 +83,13 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
     
     // MARK: - Actions
     
-        @IBAction private func yesButtonClicked(_ sender: Any) {
-            presenter.yesButtonClicked()
-            setButtonsEnabled(isEnabled: false)
-        }
-        
-        @IBAction private func noButtonClicked(_ sender: Any) {
-            presenter.noButtonClicked()
-            setButtonsEnabled(isEnabled: false)
-        }
-  }
+    @IBAction private func yesButtonClicked(_ sender: Any) {
+        presenter.yesButtonClicked()
+        setButtonsEnabled(isEnabled: false)
+    }
+    
+    @IBAction private func noButtonClicked(_ sender: Any) {
+        presenter.noButtonClicked()
+        setButtonsEnabled(isEnabled: false)
+    }
+}

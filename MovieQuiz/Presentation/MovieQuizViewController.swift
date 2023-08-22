@@ -31,7 +31,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
         presenter.restartGame()
     }
     
-    // MARK: - Private functions
+    // MARK: - Private functions, functions
     
     private func setButtonsEnabled(isEnabled: Bool) {
         noButton.isEnabled = isEnabled
@@ -47,14 +47,14 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, M
         setButtonsEnabled(isEnabled: true)
     }
     
-    /*   func show(quiz result: QuizResultsViewModel) {
-     }
-     */
-    
     func highlightImageBorder(isCorrectAnswer: Bool) {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+    }
+    
+    func setLoadingIndicatorHidden(_ isHidden: Bool) {
+        self.loadingIndicator.isHidden = isHidden
     }
     
     //MARK: - URLSession

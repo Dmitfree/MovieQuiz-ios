@@ -5,19 +5,19 @@ import XCTest
 final class MovieQuizUITests: XCTestCase {
     
     var app: XCUIApplication!
-
+    
     override func setUpWithError() throws {
         try super.setUpWithError()
         
         app = XCUIApplication()
         app.launch()
-
+        
         continueAfterFailure = false
     }
-
+    
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-       
+        
         app.terminate()
         app = nil
     }
@@ -68,14 +68,14 @@ final class MovieQuizUITests: XCTestCase {
             app.buttons["No"].tap()
             sleep(5)
         }
-
+        
         let alert = app.alerts["Game results"]
         
         XCTAssertTrue(alert.exists)
         XCTAssertTrue(alert.label == "Этот раунд окончен!")
         XCTAssertTrue(alert.buttons.firstMatch.label == "Сыграть ещё раз")
     }
-
+    
     func testAlertDismiss() {
         
         sleep(5)
@@ -84,7 +84,7 @@ final class MovieQuizUITests: XCTestCase {
             app.buttons["No"].tap()
             sleep(5)
         }
-                
+        
         let alert = app.alerts["Game results"]
         alert.buttons.firstMatch.tap()
         

@@ -5,18 +5,14 @@ import UIKit
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private let statisticService: StatisticService!
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswers = 0
     
-    
-    
-    //private lazy var alertPsenenter = AlertPresenter(delegate: viewController as? any AlertPresenterDelegate)
-    
-    init (viewController: MovieQuizViewController) {
+    init (viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         statisticService = StatisticServiceImplementation()
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
@@ -27,7 +23,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     // MARK: - QuestionFactoryDelegate
     
     func didLoadDataFromServer() {
-        viewController?.loadingIndicator.isHidden = true
+        viewController?.setLoadingIndicatorHidden(true)
         questionFactory?.requestNextQuestion()
     }
     
@@ -119,7 +115,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             ) { [weak self] _ in
                 self?.restartGame()
             }
-            viewController?.alertPresenter?.alert(with: model)   /// передаем алерту текст из модели
+            viewController?.alertPresenter?.alert(with: model)
         } else {
             self.switchToNextQuestion()
             questionFactory?.requestNextQuestion()

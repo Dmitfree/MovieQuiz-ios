@@ -42,10 +42,10 @@ class MoviesLoaderTests: XCTestCase {
             
             /// Then
             switch result {
-            case .success(let error):   /// in scope (let movies)
+            case .failure(let error):   /// in scope (let movies)
                 XCTAssertNotNil(error)
                 expectation.fulfill()
-            case .failure(_):
+            case .success(_):
                 XCTFail("Unexpexted failure")
             }
         }

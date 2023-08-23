@@ -10,7 +10,7 @@ final class AlertPresenter: AlertPresenterProtocol {
         self.delegate = delegate
     }
     
-    func alert(with model: AlertModel) {  /// метод показа алерта
+    func alert(with model: AlertModel) {
         let alert = UIAlertController(
             title: model.title,
             message: model.message,
@@ -18,9 +18,11 @@ final class AlertPresenter: AlertPresenterProtocol {
         let action = UIAlertAction(
             title: model.buttonText,
             style: .default,
-            handler: model.completion)   /// Completion handler – это функция, которая в качестве параметра принимает другую функцию.
+            handler: model.completion)
         
         alert.addAction(action)
+        
+        alert.view.accessibilityIdentifier = "Game results"
         
         delegate?.present(alert, animated: true, completion: nil)
     }

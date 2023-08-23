@@ -1,0 +1,57 @@
+{
+  "configurations" : [
+    {
+      "id" : "16B4B7C9-A4A7-437C-93E1-BB3D4B8D6D2E",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:MovieQuiz.xcodeproj",
+      "identifier" : "AD1ABAAD2831907B00B3E448",
+      "name" : "MovieQuiz"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "84BE628C2A87C235008F70AC",
+        "name" : "MovieQuizTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "84F854182A8AA59C00F5DC98",
+        "name" : "MovieQuizUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "84DCADA82A915B8300475C97",
+        "name" : "MovieQuizPresenterTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "84DCADB52A915D4500475C97",
+        "name" : "MovieQuizPresenterUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "84DCADC42A91E90300475C97",
+        "name" : "MovieQuizUnitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

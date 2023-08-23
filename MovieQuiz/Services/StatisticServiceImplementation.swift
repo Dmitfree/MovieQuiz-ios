@@ -1,7 +1,7 @@
 import Foundation
 
 final class StatisticServiceImplementation: StatisticService {
-
+    
     private let userDefaults = UserDefaults.standard
     private enum Keys: String{
         case correctQuestions, totalQuestions, accuracy, bestGame, gamesCount
@@ -31,7 +31,6 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
     
-    /// Средний процент правильных ответов
     var accuracy: Double {
         get {
             guard let correct = userDefaults.object(forKey: Keys.correctQuestions.rawValue) as? Double,
@@ -43,11 +42,10 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
     
-    /// Количество сыгранных квизов
     var gamesCount: Int {
         get {
             guard let count = userDefaults.object(forKey: Keys.gamesCount.rawValue) as? Int else {
-               return 0
+                return 0
             }
             return count
         }
@@ -56,7 +54,6 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
     
-    /// Лучшие результаты прохождения квиза
     var bestGame: GameRecord {
         get {
             guard let data = userDefaults.data(forKey: Keys.bestGame.rawValue), let record = try? JSONDecoder().decode(GameRecord.self, from: data) else {
@@ -86,7 +83,6 @@ final class StatisticServiceImplementation: StatisticService {
         if currentGame > bestGame {
             self.bestGame = currentGame
         }
-        
         correctQuestions += count
         totalQuestions += amount
     }
